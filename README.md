@@ -14,5 +14,6 @@ goop install
 
 ### Running
 
+``` bash
 go-deployments -commit=<commit-ish> -hipchat-token=<token> ...
-
+```
