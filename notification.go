@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/andybons/hipchat"
 	"log"
 	"os/exec"
 	"regexp"
@@ -19,38 +18,9 @@ type Notification struct {
 	LastCommitMessage string
 }
 
-const (
-	NotiferName = "Go Deployment"
-)
-
 var (
-	originRegex = regexp.MustCompile("/([^/]*)(:?.git)?$")
+	originRegex = regexp.MustCompile("/([^/]*?)(?:.git)?$")
 )
-
-func (n *Notification) NotifyHipChat(room string, token string) {
-	c := hipchat.Client{AuthToken: token}
-	req := hipchat.MessageRequest{
-		RoomId:        room,
-		From:          NotiferName,
-		Message:       n.hipchatMessage(),
-		Color:         hipchat.ColorPurple,
-		MessageFormat: hipchat.FormatHTML,
-		Notify:        true,
-	}
-
-	if err := c.PostMessage(req); err != nil {
-		log.Printf("Failed to notify HipChat %q", err)
-	}
-}
-
-func (n *Notification) hipchatMessage() string {
-	return fmt.Sprintf(
-		"Deployment of <strong>%s</strong> by <strong>%s</strong><br>Revision <a href=\"%s\"><strong>%s</strong></a> (%s) deployed to <strong>%s</strong><br><ul><li>%s</li></ul>\n",
-		n.AppName, n.UserName,
-		n.CommitUrl, n.Commit, n.BranchName, n.TargetEnv,
-		n.LastCommitMessage,
-	)
-}
 
 func (n *Notification) PopulateCommitInfo(commitUrlTemplate string) {
 	cmd := exec.Command("git", "show", "-s", "--format=%an: %s", n.Commit)

@@ -8,8 +8,9 @@ import (
 var (
 	// HTTP server settings
 	hipchatRoom  = flag.String("hipchat-room", "System Status", "HipChat room to notify")
-	appName      = flag.String("appname", "", "Application name to display")
 	hipchatToken = flag.String("hipchat-token", "", "HipChat API v1 token")
+	graphiteUrl  = flag.String("graphite-url", "", "Graphite URL to post events to")
+	appName      = flag.String("appname", "", "Application name to display")
 	commit       = flag.String("commit", "", "Git commit deployed")
 	commitUrl    = flag.String("commit-url", "", "URL to git commit deployed")
 	branchName   = flag.String("branch", "master", "Git branch deployed")

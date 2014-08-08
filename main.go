@@ -28,9 +28,12 @@ func main() {
 	notification.PopulateCommitInfo(*urlTemplate)
 
 	if len(*hipchatToken) > 0 {
-		notification.NotifyHipChat(*hipchatRoom, *hipchatToken)
+		NotifyHipChat(notification, *hipchatRoom, *hipchatToken)
+	}
+	if len(*graphiteUrl) > 0 {
+		NotifyGraphite(notification, *graphiteUrl)
 	}
 
-	log.Printf("Notified of deployment for %s", notification.Commit)
+	log.Printf("Notified of deployment for %s #%s", notification.AppName, notification.Commit)
 
 }
