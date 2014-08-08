@@ -24,7 +24,7 @@ const (
 )
 
 var (
-	originRegex = regexp.MustCompile("/([^/]*).git$")
+	originRegex = regexp.MustCompile("/([^/]*)(:?.git)$")
 )
 
 func (n *Notification) NotifyHipChat(room string, token string) {
