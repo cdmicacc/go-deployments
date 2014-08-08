@@ -24,7 +24,7 @@ const (
 )
 
 var (
-	originRegex = regexp.MustCompile("/([^/]*)(:?.git)$")
+	originRegex = regexp.MustCompile("/([^/]*)(:?.git)?$")
 )
 
 func (n *Notification) NotifyHipChat(room string, token string) {
@@ -72,7 +72,7 @@ func (n *Notification) PopulateCommitInfo(commitUrlTemplate string) {
 				n.AppName = matches[1]
 			}
 		} else {
-			log.Fatalf("Error getting git repo name from origin '%s': %s", origin, err.Error())
+			log.Fatalf("Error getting git repo name from origin '%s'", origin)
 		}
 	} else {
 		log.Fatalf("Error getting git origin for repository: %s", err.Error())
